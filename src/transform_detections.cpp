@@ -1,5 +1,4 @@
 #include <nlohmann/json.hpp>
-
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include <geometry_msgs/Pose2D.h>
@@ -70,7 +69,7 @@ void robot_pose_cb(const std_msgs::String::ConstPtr &msg)
 
 int main(int argc, char *argv[])
 {
-  ros::init(argc, argv, "test_read_data");
+  ros::init(argc, argv, "transform_detections");
   ros::NodeHandle nh_;
 
   ros::Subscriber detection_sub = nh_.subscribe<std_msgs::String>("/detection", 5, detection_cb);
@@ -78,8 +77,6 @@ int main(int argc, char *argv[])
 
   detection_pub = nh_.advertise<geometry_msgs::PoseArray>("/transformed_detections", 5);
   robot_pose_pub = nh_.advertise<geometry_msgs::PoseStamped>("/robot_pose_disp", 5);
-
-  std::cout << "Subscribed to /robotPose and /detection" << std::endl;
 
   ros::spin();
 
