@@ -7,6 +7,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   roscpp
   tf2
+  unique_id
 )
 
 # find_package(Boost REQUIRED COMPONENTS system)

@@ -5,6 +5,7 @@
 
 #include <ros/ros.h>
 #include <geometry_msgs/Pose.h>
+#include <geometry_msgs/PoseWithCovariance.h>
 #include <geometry_msgs/PoseArray.h>
 
 #include "load_carriers_tracker/object_tracker.h"
