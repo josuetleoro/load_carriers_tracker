@@ -28,7 +28,8 @@ private:
   ros::Publisher filtered_detection_pub_;
 
   double match_th_;
-  double kalman_p_, kalman_q_, kalman_r_;
+  double pos_kalman_p_, pos_kalman_q_, pos_kalman_r_;
+  double ori_kalman_p_, ori_kalman_q_, ori_kalman_r_;
 };
 
 #endif

@@ -1,9 +1,12 @@
 <launch>
   <node name="carriers_tracker_node" pkg="load_carriers_tracker" type="carriers_tracker_node" clear_params="true" output="screen">
     <param name="match_th" value="0.25"/>
-    <param name="estimation_variance" value="0.2"/>
-    <param name="process_noise_variance" value="10.0"/>
-    <param name="meas_noise" value="20.0"/>
+    <param name="pos_estimation_variance" value="0.2"/>
+    <param name="pos_process_noise_variance" value="10.0"/>
+    <param name="pos_meas_noise" value="20.0"/>
+    <param name="ori_estimation_variance" value="0.5"/>
+    <param name="ori_process_noise_variance" value="20.0"/>
+    <param name="ori_meas_noise" value="50.0"/>
     <!-- 5 seconds assuming 25Hz rate of detections -->
     <param name="max_cycles_without_detection" value="125"/>
   </node>

@@ -3,9 +3,12 @@
 CarriersTracker::CarriersTracker() : nh_priv_("~")
 {
   nh_priv_.param<double>("match_th", match_th_, 0.2);
-  nh_priv_.param<double>("estimation_variance", kalman_p_, 0.2);
-  nh_priv_.param<double>("process_noise_variance", kalman_q_, 10.0);
-  nh_priv_.param<double>("meas_noise", kalman_r_, 100.0);
+  nh_priv_.param<double>("pos_estimation_variance", pos_kalman_p_, 0.2);
+  nh_priv_.param<double>("pos_process_noise_variance", pos_kalman_q_, 10.0);
+  nh_priv_.param<double>("pos_meas_noise", pos_kalman_r_, 20.0);
+  nh_priv_.param<double>("ori_estimation_variance", ori_kalman_p_, 1.0);
+  nh_priv_.param<double>("ori_process_noise_variance", ori_kalman_q_, 20.0);
+  nh_priv_.param<double>("ori_meas_noise", ori_kalman_r_, 50.0);
   nh_priv_.param<int>("max_cycles_without_detection", max_cycles_without_detection_, 125); // 5 seconds assuming 25Hz rate of detections
 
   detection_sub_ = nh_priv_.subscribe<geometry_msgs::PoseArray>("/transformed_detections", 1, &CarriersTracker::detectionCb, this);
@@ -26,7 +29,7 @@ void CarriersTracker::detectionCb(const geometry_msgs::PoseArray::ConstPtr &msg)
     }
     else
     {
-      carriers_.push_back(ObjectTracker(pose, kalman_p_, kalman_q_, kalman_r_));
+      carriers_.push_back(ObjectTracker(pose, pos_kalman_p_, pos_kalman_q_, pos_kalman_r_, ori_kalman_p_, ori_kalman_q_, ori_kalman_r_));
       cycles_without_detection_.push_back(0);
     }
   }

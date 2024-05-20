@@ -19,7 +19,7 @@ ros::Publisher detection_pub;
 ros::Publisher robot_pose_pub;
 tf2::Transform robot_pose_tf;
 
-void detection_cb(const std_msgs::String::ConstPtr &msg)
+void detectionCb(const std_msgs::String::ConstPtr &msg)
 {
   const json df = json::parse(msg->data);
 
@@ -46,7 +46,7 @@ void detection_cb(const std_msgs::String::ConstPtr &msg)
   detection_pub.publish(pose_array);
 }
 
-void robot_pose_cb(const std_msgs::String::ConstPtr &msg)
+void robotPoseCb(const std_msgs::String::ConstPtr &msg)
 {
   const json df = json::parse(msg->data)["pose"];
 
@@ -72,8 +72,8 @@ int main(int argc, char *argv[])
   ros::init(argc, argv, "transform_detections");
   ros::NodeHandle nh_;
 
-  ros::Subscriber detection_sub = nh_.subscribe<std_msgs::String>("/detection", 5, detection_cb);
-  ros::Subscriber robot_pose_sub = nh_.subscribe<std_msgs::String>("/robotPose", 5, robot_pose_cb);
+  ros::Subscriber detection_sub = nh_.subscribe<std_msgs::String>("/detection", 5, detectionCb);
+  ros::Subscriber robot_pose_sub = nh_.subscribe<std_msgs::String>("/robotPose", 5, robotPoseCb);
 
   detection_pub = nh_.advertise<geometry_msgs::PoseArray>("/transformed_detections", 5);
   robot_pose_pub = nh_.advertise<geometry_msgs::PoseStamped>("/robot_pose_disp", 5);

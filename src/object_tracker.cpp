@@ -1,19 +1,20 @@
 #include "load_carriers_tracker/object_tracker.h"
 
-ObjectTracker::ObjectTracker(const geometry_msgs::Pose &pose, double init_estim_var, double proc_var, double meas_noise)
+ObjectTracker::ObjectTracker(const geometry_msgs::Pose &pose, double pos_init_estim_var, double pos_proc_var, double pos_meas_noise,
+                             double ori_init_estim_var, double ori_proc_var, double ori_meas_noise)
 {
   // Generate UUID
   id_ = generateUUID();
   pose_.pose = pose;
-  pose_.covariance[0] = init_estim_var;
-  pose_.covariance[7] = init_estim_var;
-  pose_.covariance[35] = init_estim_var;
+  pose_.covariance[0] = pos_init_estim_var;
+  pose_.covariance[7] = pos_init_estim_var;
+  pose_.covariance[35] = ori_init_estim_var;
   x_ = pose.position.x;
   y_ = pose.position.y;
   theta_ = tf::getYaw(pose.orientation);
-  filter_x_ = Filter::KalmanFilter(init_estim_var, proc_var, meas_noise, x_);
-  filter_y_ = Filter::KalmanFilter(init_estim_var, proc_var, meas_noise, y_);
-  filter_theta_ = Filter::KalmanFilter(init_estim_var, proc_var, meas_noise, theta_);
+  filter_x_ = Filter::KalmanFilter(pos_init_estim_var, pos_proc_var, pos_meas_noise, x_);
+  filter_y_ = Filter::KalmanFilter(ori_init_estim_var, ori_proc_var, pos_meas_noise, y_);
+  filter_theta_ = Filter::KalmanFilter(ori_init_estim_var, ori_proc_var, ori_meas_noise, theta_);
 }
 
 void ObjectTracker::update(const geometry_msgs::Pose &pose)

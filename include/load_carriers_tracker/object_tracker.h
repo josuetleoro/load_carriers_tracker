@@ -14,7 +14,8 @@
 class ObjectTracker
 {
 public:
-  ObjectTracker(const geometry_msgs::Pose &pose, double init_estim_var, double proc_var, double meas_noise);
+  ObjectTracker(const geometry_msgs::Pose &pose, double pos_init_estim_var, double pos_proc_var, double pos_meas_noise,
+                double ori_init_estim_var, double ori_proc_var, double ori_meas_noise);
   void update(const geometry_msgs::Pose &pose);
   std::string getId() { return id_; }
   const double getX() { return x_; }
