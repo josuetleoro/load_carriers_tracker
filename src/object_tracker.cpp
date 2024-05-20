@@ -19,14 +19,14 @@ ObjectTracker::ObjectTracker(const geometry_msgs::Pose &pose, double init_estim_
 void ObjectTracker::update(const geometry_msgs::Pose &pose)
 {
   // If the difference in theta is greater than 90 degrees, skip the update
-  if (fabs(tf::getYaw(pose.orientation) - theta_) > M_PI / 2)
+  double theta = tf::getYaw(pose.orientation);
+  if (fabs(angles::shortest_angular_distance(theta_, theta)) > M_PI / 2)
   {
     return;
   }
-
   double x = pose.position.x;
   double y = pose.position.y;
-  double theta = tf::getYaw(pose.orientation);
+
   filter_x_.update(x);
   filter_y_.update(y);
   filter_theta_.update(theta);

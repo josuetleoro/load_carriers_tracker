@@ -3,7 +3,7 @@
     <param name="match_th" value="0.2"/>
     <param name="estimation_variance" value="0.2"/>
     <param name="process_noise_variance" value="10.0"/>
-    <param name="meas_noise" value="100.0"/>
+    <param name="meas_noise" value="20.0"/>
     <!-- 5 seconds assuming 25Hz rate of detections -->
     <param name="max_cycles_without_detection" value="125"/>
   </node>

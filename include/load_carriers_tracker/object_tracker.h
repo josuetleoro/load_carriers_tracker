@@ -7,6 +7,7 @@
 #include <tf/transform_datatypes.h>
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/PoseWithCovariance.h>
+#include <angles/angles.h>
 
 #include "load_carriers_tracker/kalman_filter.hpp"
 
