@@ -4,8 +4,9 @@ CarriersTracker::CarriersTracker() : nh_priv_("~")
 {
   nh_priv_.param<double>("match_th", match_th_, 0.2);
   nh_priv_.param<double>("estimation_variance", kalman_p_, 0.2);
-  nh_priv_.param<double>("process_nosie_variance", kalman_q_, 10.0);
+  nh_priv_.param<double>("process_noise_variance", kalman_q_, 10.0);
   nh_priv_.param<double>("meas_noise", kalman_r_, 100.0);
+  nh_priv_.param<int>("max_cycles_without_detection", max_cycles_without_detection_, 125); // 5 seconds assuming 25Hz rate of detections
 
   detection_sub_ = nh_priv_.subscribe<geometry_msgs::PoseArray>("/transformed_detections", 1, &CarriersTracker::detectionCb, this);
   filtered_detection_pub_ = nh_priv_.advertise<geometry_msgs::PoseArray>("/filtered_detection", 1);
@@ -20,11 +21,27 @@ void CarriersTracker::detectionCb(const geometry_msgs::PoseArray::ConstPtr &msg)
     if (match != -1)
     {
       carriers_[match].update(pose);
+      cycles_without_detection_[match] = 0;
       continue;
     }
     else
     {
       carriers_.push_back(ObjectTracker(pose, kalman_p_, kalman_q_, kalman_r_));
+      cycles_without_detection_.push_back(0);
+    }
+  }
+
+  // Remove carriers that had not been detected for a while
+  for (size_t i = 0; i < carriers_.size(); i++)
+  {
+    if (cycles_without_detection_[i] > max_cycles_without_detection_)
+    {
+      carriers_.erase(carriers_.begin() + i);
+      cycles_without_detection_.erase(cycles_without_detection_.begin() + i);
+    }
+    else
+    {
+      cycles_without_detection_[i]++;
     }
   }
 

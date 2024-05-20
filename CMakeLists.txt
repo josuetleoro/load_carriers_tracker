@@ -18,10 +18,10 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(transform_detections src/transform_detections.cpp)
-add_dependencies(transform_detections ${catkin_EXPORTED_TARGETS})
-target_link_libraries(transform_detections ${catkin_LIBRARIES})
+add_executable(transform_detections_node src/transform_detections_node.cpp)
+add_dependencies(transform_detections_node ${catkin_EXPORTED_TARGETS})
+target_link_libraries(transform_detections_node ${catkin_LIBRARIES})
 
-add_executable(carrier_tracker_node src/carriers_tracker_node.cpp src/carriers_tracker.cpp src/object_tracker.cpp)
-add_dependencies(carrier_tracker_node ${catkin_EXPORTED_TARGETS})
-target_link_libraries(carrier_tracker_node ${catkin_LIBRARIES})
+add_executable(carriers_tracker_node src/carriers_tracker_node.cpp src/carriers_tracker.cpp src/object_tracker.cpp)
+add_dependencies(carriers_tracker_node ${catkin_EXPORTED_TARGETS})
+target_link_libraries(carriers_tracker_node ${catkin_LIBRARIES})
