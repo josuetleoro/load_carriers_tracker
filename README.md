@@ -15,5 +15,5 @@ roslaunch load_carriers_tracker carrier_trackers.launch
 ```
 
 ## Results
-![Results](./doc/carriers_tracker_results.gif)
+![Results](doc/carriers_tracker_results.gif)
 
