@@ -4,7 +4,7 @@ CarriersTracker::CarriersTracker() : nh_priv_("~")
 {
   nh_priv_.param<double>("match_th", match_th_, 0.2);
   nh_priv_.param<double>("pos_estimation_variance", pos_kalman_p_, 0.2);
-  nh_priv_.param<double>("pos_process_noise_variance", pos_kalman_q_, 10.0);
+  nh_priv_.param<double>("pos_process_noise_variance", pos_kalman_q_, 0.5);
   nh_priv_.param<double>("pos_meas_noise", pos_kalman_r_, 20.0);
   nh_priv_.param<double>("ori_estimation_variance", ori_kalman_p_, 1.0);
   nh_priv_.param<double>("ori_process_noise_variance", ori_kalman_q_, 20.0);
